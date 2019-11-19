@@ -11,18 +11,21 @@ class Client(Ice.Application):
         print('Cliente iniciado\n\n')
 
     def principal(self, current=None):
-        print('/////////////////////////////////////////////////////////////////')
-        print('// Bienvenido a la aplicacion para descargar musica de Youtube //')
-        print('/////////////////////////////////////////////////////////////////')
-        print('\nSelecciona la opcion que desees')
-        print('1. Descargar cancion')
+        print('-----------------------------------------------------------------')
+        print('|                  Descargar música de YouTube  				   |')
+        print('-----------------------------------------------------------------')
+        print('\nElige una opción:')
+        print('1. Descargar canción')
         print('2. Salir')
 
     def descargarSong(self, orchestrator, current=None):
-        print('El gestor de descargas responde: ',message,'\n\n')
+		print('Introduce la URL de la canción que quieres descargar')
+		cancion = input()
+		msg = orchestrator.downloadTask(cancion)
+        print('El gestor de descargas responde: ',msg,'\n\n')
 
     def run(self, argv):
-
+		
 
 
 
