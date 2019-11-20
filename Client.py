@@ -3,7 +3,8 @@
 
 
 import Ice
-
+Ice.loadSlice('trawlnet.ice')
+import TrawlNet
 import sys
 
 class Client(Ice.Application):
@@ -25,10 +26,13 @@ class Client(Ice.Application):
         print('El gestor de descargas responde: ',msg,'\n\n')
 
     def run(self, argv):
-		
+        proxy = self.communicator().stringToProxy(argv[1])
+        orchestrator = TrawlNet.OrchestratorPrx.checkedCast(proxy)
 
+        if not orchestrator:
+            raise RuntimeError('Invalid orchestrator proxy')
 
-
+        orchestrator.downloadTask(argv[2])
         return 0
 
 sys.exit(Client().main(sys.argv))

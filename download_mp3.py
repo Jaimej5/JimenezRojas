@@ -15,7 +15,7 @@ class NullLogger:
 	def error(self,msg): pass
 
 #Opciones de descarga de YouTube
-_YTDL_OPTS_ = {
+_YOUTUBEDL_OPTS_  = {
     'format': 'bestaudio/best',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
