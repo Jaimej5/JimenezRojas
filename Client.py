@@ -21,9 +21,9 @@ class Client(Ice.Application):
 
     def descargarSong(self, orchestrator, current=None):
 		print('Introduce la URL de la canción que quieres descargar')
-		cancion = input()
-		msg = orchestrator.downloadTask(cancion)
-        print('El gestor de descargas responde: ',msg,'\n\n')
+		name = input()
+		message = orchestrator.downloadTask(name)
+        print('El gestor de descargas responde: ',message,'\n\n')
 
     def run(self, argv):
         proxy = self.communicator().stringToProxy(argv[1])
@@ -33,6 +33,7 @@ class Client(Ice.Application):
             raise RuntimeError('Invalid orchestrator proxy')
 
         orchestrator.downloadTask(argv[2])
-        return 0
+        
+		return 0
 
 sys.exit(Client().main(sys.argv))

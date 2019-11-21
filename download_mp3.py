@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8; mode: python; -*-
 
-#Imports
+
 import os.path
 try:
 	import youtube_dl
@@ -14,7 +14,7 @@ class NullLogger:
 	def warning(self,msg): pass
 	def error(self,msg): pass
 
-#Opciones de descarga de YouTube
+
 _YOUTUBEDL_OPTS_  = {
     'format': 'bestaudio/best',
     'postprocessors': [{
@@ -25,24 +25,24 @@ _YOUTUBEDL_OPTS_  = {
     'logger': NullLogger()
 }
 
-def download_mp3(URL,destino='./'):
+def download_mp3(url,destination='./'):
 
-	opciones = {}
-	estado = {}
+	options = {}
+	task_status = {}
 	
-	def progreso(estado):
-		estado.update(estado)
+	def progress_hook(status):
+		task_status.update(status)
 	
-	opciones.update(_YTDL_OPTS)
-	opciones['progreso'] = [progreso]
-	opciones['salida'] = os.path.join(destino,'%(title)s.%(ext)s')
+	options.update(_YOUTUBEDL_OPTS_)
+	options['progress_hooks'] = [progress_hook]
+	options['outtmpl'] = os.path.join(destination,'%(title)s.%(ext)s')
 	
 	with youtube_dl.YoutubeDL(options) as youtube:
-		youtube.download([URL])
+		youtube.download([url])
 	
-	archivo = estado['archivo']
-	archivo = archivo[:archivo.rindex('.') + 1]
-	return archivo + opciones['postprocessors'][0]['preferredcodec']
+	filename = task_status['filename']
+	filename = filename[:filename.rindex('.') + 1]
+	return filename + options['postprocessors'][0]['preferredcodec']
 	
 		
 	
