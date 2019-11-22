@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
+'''
+Implementacion del cliente
+'''
 
 import sys
 import Ice # pylint: disable=E0401, C0413
 Ice.loadSlice('trawlnet.ice')
 import TrawlNet # pylint: disable=E0401, C0413
+
 
 class Cliente(Ice.Application):
     '''

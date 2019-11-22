@@ -1,32 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8; mode: python; -*-
+'''
+Orchestrator
+'''
 
-'''Orchestrator'''
-
+import sys
 import Ice # pylint: disable=E0401, C0413
 Ice.loadSlice('trawlnet.ice')
 import TrawlNet # pylint: disable=E0401, C0413
 
-import sys
 
 class Orchestrator(TrawlNet.Orchestrator):
-    
-	'''Orchestrator'''
-	
-	def __init__(self, param):
-	
-		'''Constructor'''
-		
-		self.downloader = param
+    '''Orchestrator'''
+
+    def __init__(self, param):
+        ''' Constructor '''
+        self.downloader = param
 
     def downloadTask(self, url, current=None):
-        
-		'''Download Task'''
-		
-		reply = 'respuesta de Orchestrator'
-
-        print('url',url,)
-        reply_downloader=self.downloader.addDownloadTask(url)
+        ''' Download task '''
+        reply = 'respuesta de Orchestrator'
+        print('url ', url)
+        reply_downloader = self.downloader.addDownloadTask(url)
         return reply+reply_downloader
 
 class Server(Ice.Application):
