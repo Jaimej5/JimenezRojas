@@ -1,4 +1,4 @@
-git@github.com:Jaimej5/PracticasDistribuidos.git
+git@github.com:Jaimej5/JimenezRojas.git
 
 Jaime Jimenez Catalán
 Alvaro Rojas Parra
