@@ -1,4 +1,4 @@
-git@github.com:Jaimej5/JimenezRojas.git
+https://github.com/Jaimej5/JimenezRojas
 
 Jaime Jimenez Catalán
 Alvaro Rojas Parra
