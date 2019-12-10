@@ -65,3 +65,22 @@ class OrchestratorI(TrawlNet.Orchestrator): #pylint: disable=R0903
             fileInfo.name = self.files[fileHash]
             songs.append(fileInfo)
         return songs
+    
+class Server(Ice.Application):  #pylint: disable=R0903
+    '''
+    Servidor
+    '''
+    files = {}
+    def run(self, argv):
+        '''
+        Iniciar servidor
+        '''
+        key = "IceStorm.TopicManager.Proxy"
+        topic_name = "UpdateEvents"
+        topic_orchestrator = "OrchestratorSync"
+        qos_orch = {}
+        qos = {}
+        proxy = self.communicator().propertyToProxy(key)
+        print("Using IceStorm in '%s'" % key)
+        
+        
