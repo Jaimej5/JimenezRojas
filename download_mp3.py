@@ -1,0 +1,72 @@
+'''
+Download youtube mp3
+'''
+import hashlib
+import os.path
+import youtube_dl #pylint: disable=E0401
+
+
+class NullLogger:
+    '''
+    NullLogger
+    '''
+    def debug(self, msg):
+        '''
+        debug method
+        '''
+        pass
+
+    def warning(self, msg):
+        '''
+        warning method
+        '''
+        pass
+
+    def error(self, msg):
+        '''
+        error method
+        '''
+        pass
+
+_YOUTUBEDL_OPTS_ = {
+    'format': 'bestaudio/best',
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192',
+    }],
+    'logger': NullLogger()
+}
+
+
+def download_mp3(url, destination='./'):
+    '''
+    Synchronous download from YouTube
+    '''
+    options = {}
+    task_status = {}
+
+    def progress_hook(status):
+        '''
+        progress hook
+        '''
+        task_status.update(status)
+    options.update(_YOUTUBEDL_OPTS_)
+    options['progress_hooks'] = [progress_hook]
+    options['outtmpl'] = os.path.join(destination, '%(title)s.%(ext)s')
+
+    with youtube_dl.YoutubeDL(options) as youtube:
+        youtube.download([url])
+    filename = task_status['filename']
+    filename = filename[:filename.rindex('.') + 1]
+    return filename + options['postprocessors'][0]['preferredcodec']
+
+def hash_fichero(file_name):
+    '''
+    Hash fichero
+    '''
+    file_hash = hashlib.md5()
+    with open(file_name, "rb") as new_file:
+        for chunk in iter(lambda: new_file.read(4096), b''):
+            file_hash.update(chunk)
+    return file_hash.hexdigest()
