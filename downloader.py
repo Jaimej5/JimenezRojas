@@ -36,7 +36,39 @@ class DownloaderI(TrawlNet.Downloader):  # pylint: disable=R0903
         event = TrawlNet.UpdateEventPrx.uncheckedCast(orchestrators)
         event.newFile(fileInfo)
         return fileInfo
-    
+
+class Server(Ice.Application): # pylint: disable=R0903
+    '''
+    Server instance
+    '''
+    def run(self, argv): # pylint: disable=W0613
+        '''
+        Run Server
+        '''
+        key = 'IceStorm.TopicManager.Proxy'
+        proxy = self.communicator().propertyToProxy(key)
+        if proxy is None:
+            return None
+        topic_mgr = IceStorm.TopicManagerPrx.checkedCast(proxy)
+        if not topic_mgr:
+            return 2
+
+        topic_name = "UpdateEvents"
+        try:
+            topic = topic_mgr.retrieve(topic_name)
+        except IceStorm.NoSuchTopic:
+            topic = topic_mgr.create(topic_name)
+
+        downloader = DownloaderI(topic)
+        broker = self.communicator()
+        adapter = broker.createObjectAdapter("DownloaderAdapter")
+        proxy = adapter.add(downloader, broker.stringToIdentity("dwn"))
+        print(proxy, flush=True)
+        adapter.activate()
+        self.shutdownOnInterrupt()
+        broker.waitForShutdown()
+        return 0
+
 class NullLogger:
     '''
     NullLogger
@@ -99,3 +131,8 @@ def file_hash(filename):
             fileHash.update(chunk)
     return fileHash.hexdigest()
 
+
+
+
+DOWN = Server()
+sys.exit(DOWN.main(sys.argv))
