@@ -2,37 +2,60 @@
 # -*- coding: utf-8 -*-
 
 '''
-Downloader: Servidor
+Downloader
 '''
 
 import sys
-import hashlib
 import os.path
-import youtube_dl #pylint: disable=E0401
-import Ice # pylint: disable=E0401,E0401
-import IceStorm
+import Ice # pylint: disable=E0401
+import IceStorm  # pylint: disable=W0611
 Ice.loadSlice('trawlnet.ice')
 import TrawlNet # pylint: disable=E0401,C0413
+from topic_icestorm import Topics
+import download_mp3 as download
+
+
+class Server(Ice.Application): # pylint: disable=R0903
+    '''
+    Server
+    '''
+    def run(self, argv): # pylint: disable=W0613,W0221
+        ''' Run '''
+        broker = self.communicator()
+        adapter = broker.createObjectAdapter("DownloaderAdapter")
+        downloader = DownloaderI()
+        topics = Topics(broker)
+        topic_archivos = topics.topic_archivos
+        downloader.publisher = TrawlNet.UpdateEventPrx.uncheckedCast(topic_archivos.getPublisher())
+        proxy = adapter.addWithUUID(downloader)
+        print(proxy, flush=True)
+        adapter.activate()
+        self.shutdownOnInterrupt()
+        broker.waitForShutdown()
+        return 0
 
 class DownloaderI(TrawlNet.Downloader):  # pylint: disable=R0903
     '''
-    DownloaderImplementation
+    DownloaderI
     '''
     publisher = None
 
-    def __init__(self, event):
-        self.event_file = event
-
     def addDownloadTask(self, url, current=None): # pylint: disable=C0103, R0201, W0613
-        '''
-        Add Download Task
-        '''
-        file = download_mp3(url)
-        fileInfo = TrawlNet.FileInfo()
-        fileInfo.name = os.path.basename(file)
-        fileInfo.hash = compute_hash(fileInfo.name)
-        orchestrators = self.event_file.getPublisher()
-        ##Downloader exception
-        event = TrawlNet.UpdateEventPrx.uncheckedCast(orchestrators)
-        event.newFile(fileInfo)
-        return fileInfo
+        ''' addDownloadTask '''
+        try:
+            archivo_descarga = download.download_mp3(url)
+        except:
+            raise TrawlNet.DownloadError("Error")
+
+        archivo_info = TrawlNet.FileInfo()
+        archivo_info.name = os.path.basename(archivo_descarga)
+        archivo_info.hash = download.hash_fichero(archivo_info.name)
+
+        if self.publisher:
+            self.publisher.newFile(archivo_info)
+        return archivo_info
+
+
+
+SERVER = Server()
+sys.exit(SERVER.main(sys.argv))
