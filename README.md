@@ -45,7 +45,7 @@ Icestorm > Downloads-node > Orchestrators-node
 ```
 6) Ejecutar el comando
 ```
-./run_client.sh
+~$ ./run_client.sh
 ```
 
 ### Descripción de los componentes del sistema
