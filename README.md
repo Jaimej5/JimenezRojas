@@ -19,9 +19,9 @@ que permita la descarga de ficheros a partir de URIs. El ejemplo típico será l
 de YouTube.
 
 Para implementar el sistema se llevaran a cabo tres fases:
-* FASE 1(L1): Introducción de los Actores
-* FASE 2(L2): Descarga y sincronización de componentes
-* FASE 3(L3): El sistema final
+* **FASE 1(L1)**: Introducción de los Actores
+* **FASE 2(L2)**: Descarga y sincronización de componentes
+* **FASE 3(L3)**: El sistema final
 
 Habiendo realizado previamente las dos primeras fases, en esta rama se construye el sistema final. Este sistema final se compone
 de un cliente, tres orchestrators, una factoría de downloaders y una factoría de transfers.
@@ -42,31 +42,31 @@ de orchestrators existentes de cada objeto.
 </p>
 
 ## MANUAL DEL USUARIO
-**¿Cómo ejecutar?**
+**¿CÓMO EJECUTAR EL SISTEMA?**
 
-1) Ejecutar el comando make y abrir la interfaz gráfica de Ice
+**1)** Ejecutar el comando make y abrir la interfaz gráfica de Ice
 ```
 ~$ make run
 ~$ icegridgui
 ```
-2) Crear una nueva conexion con el registro
+**2)** Crear una nueva conexion con el registro
 ```
 Pulsar boton Log into an IceGrid Registry -> New Conection -> Direct Conection -> Seleccionar el registry -> Poner contraseña y crear la conexión -> Pulsar Next
 ```
-3) Abrir el archivo xml
+**3)** Abrir el archivo xml
 ```
 Open-> Application from File -> YoutubeDownloaderApp.xml
 ```
-4) Cargar la aplicación en el registro y distribuir
+**4)** Cargar la aplicación en el registro y distribuir
 ```
 1) Save to a registry
 2) En Live Deployment Tools -> Application -> Path distribution
 ```
-5) Ejecutar los nodos por orden
+**5)** Ejecutar los nodos por orden
 ```
 Icestorm > Downloads-node > Orchestrators-node
 ```
-6) Ejecutar el comando
+**6)** Ejecutar el comando
 ```
 ~$ ./run_client.sh
 ```
