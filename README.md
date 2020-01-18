@@ -73,10 +73,20 @@ Icestorm > Downloads-node > Orchestrators-node
 
 ## DESCRIPCIÓN DE LOS COMPONENTES DEL SISTEMA
 **Servidor**
-1) downloader_factory.py
-2) transfer_factory.py
-3) orchestrator.py
+#### downloader_factory.py:
+Es el componente encargado de la descarga de ficheros, y son creados bajo demanda mediante una factoría de objetos. Una vez que recibe una peticion, procederá a descargarla, y cuando la descargue, avisará a los orchestrator de que se ha bajado el archivo, para, después, autodestruirse.
+#### transfer_factory.py:
+El transfer es el componente encargado de la transferencia de ficheros, y, al igual que el anterior, son creados bajo demanda
+mediante una factoría de objetos para poder recibir peticiones de transferencia.
+- Cuando reciba la petición, creará la tarea para que el transfer transfiera el audio de forma similar a como se realiza el envío de información por medio de sockets en python, y al finalizar ésta, es destruido. [close()-destroy()]
+#### orchestrator.py:
+Se encarga de la gestión de los downloaders, haciendo de intermediario entre éstos y el  cliente. Es una de las partes que actúan del 
+servidor y pueden existir uno o varios. Además, estas siempre a la espera de recibir nuevas peticiones por parte del cliente.
+- Cabe destacar, que éstas son asignadas a downloaders y transfers, después de haber solicitado su creación. 
+- También mantiene listas actualizadas de los ficheros ya  descargados en el sistema controlando los eventos del canal de actualizaciones y proporcionará la lista de ficheros disponibles (ya descargados e indexados)de todos los downloaders del sistema.
+- Finalmente, Cuando se arranca un nuevo orchestrator saluda al resto de orchestrators, que se anuncian al nuevo objeto.
 
 **Cliente**
-1) client.py
+#### client.py:
+El cliente  se conecta a cualquiera de los orchestrators para solicitar información o la descarga de ficheros. En esta fase solicitará descargas, transferencias o la lista de ficheros a cualquiera de los orchestrators: recibe una URL como argumento para descargar, el nombre de un fichero para una transferencia, y si no recibe nada, la lista los ficheros que haya en el sistema.
 
