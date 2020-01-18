@@ -1,24 +1,45 @@
-## Practica Sistemas distribuidos
+## SISTEMAS DISTRIBUIDOS 2019/20: PRÁCTICA
 https://github.com/Jaimej5/JimenezRojas
 
-## Enunciado 
-Por hacer
+## INTEGRANTES
+Jaime Jiménez Catalán
+Álvaro Rojas Parra
 
-## Diagrama 
-<p align="center">
-  <img width="400" height="300" src="">
-</p>
+## RAMAS DEL REPOSITORIO
 
-## Integrantes
-Jaime Jimenez Catalán y Alvaro Rojas Parra
-
-## Ramas
---------
 * Entrega 1 -> L1
 * Entrega 2 -> L2
 * Entrega 3 -> L3
 
-## Manual de usuario
+## ENUNCIADO
+El objetivo principal del proyecto contenido en este repositorio es diseñar un sistema cliente-servidor 
+que permita la descarga de ficheros a partir de URIs. El ejemplo típico será la descarga de clips de audio
+de YouTube.
+
+Para implementar el sistema se llevaran a cabo tres fases:
+* FASE 1(L1): Introducción de los Actores
+* FASE 2(L2): Descarga y sincronización de componentes
+* FASE 3(L3): El sistema final
+
+Habiendo realizado previamente las dos primeras fases, en esta rama se construye el sistema final. Este sistema final se compone
+de un cliente, tres orchestrators, una factoría de downloaders y una factoría de transfers.
+Una vez creada la infraestructura del sistema, el cliente podrá mandar una URL a un orchestrator que a su vez lo reenviará
+a un downloader, que descargará el archivo(si no ha sido descargado previamente) y lo pondra a disposición de los
+orchestrator mediante un canal de eventos.
+
+El cliente podrá solicitar la lista de ficheros descargados a un orchestrator y podrá también pedir la transferencia de un archivo
+de audio a un orchestrator que reenviara esa petición a un transfer (si el archivo se ha descargado previamente) para que el
+transfer lo envie directamente al cliente.
+
+Destacar que, los orchestrator deben comunicarse entre ellos para anunciar su creación con el objetivo de actualizar las listas
+de orchestrators existentes de cada objeto.
+
+## DIAGRAMA DEL SISTEMA
+<p align="center">
+  <img width="400" height="300" src="https://i.gyazo.com/f079e813d0bf8f8909f31fd5fa9b68e8.png">
+</p>
+
+## MANUAL DEL USUARIO
 **¿Cómo ejecutar?**
 
 1) Ejecutar el comando make y abrir la interfaz gráfica de Ice
@@ -48,8 +69,7 @@ Icestorm > Downloads-node > Orchestrators-node
 ~$ ./run_client.sh
 ```
 
-### Descripción de los componentes del sistema
-Por hacer
+## DESCRIPCIÓN DE LOS COMPONENTES DEL SISTEMA
 **Servidor**
 1) downloader_factory.py
 2) transfer_factory.py
