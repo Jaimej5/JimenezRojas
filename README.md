@@ -72,7 +72,7 @@ Icestorm > Downloads-node > Orchestrators-node
 ```
 
 ## DESCRIPCIÓN DE LOS COMPONENTES DEL SISTEMA
-**Servidor**
+### **Servidor**
 #### downloader_factory.py:
 Es el componente encargado de la descarga de ficheros, y son creados bajo demanda mediante una factoría de objetos. Una vez que recibe una peticion, procederá a descargarla, y cuando la descargue, avisará a los orchestrator de que se ha bajado el archivo, para, después, autodestruirse.
 #### transfer_factory.py:
@@ -86,7 +86,7 @@ servidor y pueden existir uno o varios. Además, estas siempre a la espera de re
 - También mantiene listas actualizadas de los ficheros ya  descargados en el sistema controlando los eventos del canal de actualizaciones y proporcionará la lista de ficheros disponibles (ya descargados e indexados)de todos los downloaders del sistema.
 - Finalmente, Cuando se arranca un nuevo orchestrator saluda al resto de orchestrators, que se anuncian al nuevo objeto.
 
-**Cliente**
+### **Cliente**
 #### client.py:
 El cliente  se conecta a cualquiera de los orchestrators para solicitar información o la descarga de ficheros. En esta fase solicitará descargas, transferencias o la lista de ficheros a cualquiera de los orchestrators: recibe una URL como argumento para descargar, el nombre de un fichero para una transferencia, y si no recibe nada, la lista los ficheros que haya en el sistema.
 
