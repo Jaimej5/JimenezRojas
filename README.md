@@ -2,14 +2,16 @@
 https://github.com/Jaimej5/JimenezRojas
 
 ## INTEGRANTES
-Jaime Jiménez Catalán
-Álvaro Rojas Parra
+* Jaime Jiménez Catalán
+* Álvaro Rojas Parra
 
 ## RAMAS DEL REPOSITORIO
 
-* Entrega 1 -> L1
-* Entrega 2 -> L2
-* Entrega 3 -> L3
+| *Entrega*        | *Rama*          |
+| ------------- |:-------------:|
+| Entrega 1     | L1 |
+| Entrega 2      | L2      |
+| Entrega 3 | L3      |
 
 ## ENUNCIADO
 El objetivo principal del proyecto contenido en este repositorio es diseñar un sistema cliente-servidor 
@@ -24,7 +26,7 @@ Para implementar el sistema se llevaran a cabo tres fases:
 Habiendo realizado previamente las dos primeras fases, en esta rama se construye el sistema final. Este sistema final se compone
 de un cliente, tres orchestrators, una factoría de downloaders y una factoría de transfers.
 Una vez creada la infraestructura del sistema, el cliente podrá mandar una URL a un orchestrator que a su vez lo reenviará
-a un downloader, que descargará el archivo(si no ha sido descargado previamente) y lo pondra a disposición de los
+a un downloader, que descargará el archivo (si no ha sido descargado previamente) y lo pondra a disposición de los
 orchestrator mediante un canal de eventos.
 
 El cliente podrá solicitar la lista de ficheros descargados a un orchestrator y podrá también pedir la transferencia de un archivo
@@ -36,7 +38,7 @@ de orchestrators existentes de cada objeto.
 
 ## DIAGRAMA DEL SISTEMA
 <p align="center">
-  <img width="400" height="300" src="https://i.gyazo.com/f079e813d0bf8f8909f31fd5fa9b68e8.png">
+  <img width="653" height="776" src="https://i.gyazo.com/f079e813d0bf8f8909f31fd5fa9b68e8.png">
 </p>
 
 ## MANUAL DEL USUARIO
