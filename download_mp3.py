@@ -65,7 +65,8 @@ def hash_fichero(file_name):
     Hash fichero
     '''
     file_hash = hashlib.md5()
-    with open(file_name, "rb") as new_file:
+    complete_path = "./downloads"+file_name
+    with open(complete_path, "rb") as new_file:
         for chunk in iter(lambda: new_file.read(4096), b''):
             file_hash.update(chunk)
     return file_hash.hexdigest()
