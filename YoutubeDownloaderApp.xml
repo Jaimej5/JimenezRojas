@@ -42,8 +42,10 @@
          </service>
       </service-template>
       <server-template id="DownloaderFactory">
-         <server id="DownloaderFactory" activation="on-demand" exe="./downloader_factory.py" pwd="${application.distrib}">
+         <server id="DownloaderFactoryServer" activation="on-demand" exe="./downloader_factory.py" pwd="${application.distrib}">
             <properties>
+               <property name="Ice.StdOut" value="${application.distrib}/downloader.txt"/>
+               <property name="Ice.StdErr" value="${application.distrib}/downloader-err.txt"/>
             </properties>
             <adapter name="DownloaderAdapter" endpoints="default" id="${server}.DownloaderAdapter">
                <object identity="downloader" type="::TrawlNet::DownloaderFactory" property="DownloaderFactoryIdentity"/>
@@ -102,7 +104,7 @@
       </server-template>
       <server-template id="OrchestratorTemplate">
          <parameter name="index"/>
-         <server id="Orchestrator${index}" activation="on-demand" exe="./orchestrator.py" pwd="${application.distrib}">
+         <server id="OrchestratorServer${index}" activation="on-demand" exe="./orchestrator.py" pwd="${application.distrib}">
             <properties>
                <property name="Ice.StdOut" value="${application.distrib}/orchestrator${index}.txt"/>
                <property name="Ice.StdErr" value="${application.distrib}/orchestrator${index}-err.txt"/>
@@ -115,7 +117,7 @@
          </server>
       </server-template>
       <server-template id="TransferFactory">
-         <server id="TransferFactory" activation="on-demand" exe="./transfer_factory.py" pwd="${application.distrib}">
+         <server id="TransferFactoryServer" activation="on-demand" exe="./transfer_factory.py" pwd="${application.distrib}">
             <properties>
                <property name="Ice.StdOut" value="${application.distrib}/transfer.txt"/>
                <property name="Ice.StdErr" value="${application.distrib}/transfer-err.txt"/>

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-Cliente
+Client
 '''
 import sys
 import os
@@ -11,7 +11,7 @@ import Ice # pylint: disable=E0401
 Ice.loadSlice('trawlnet.ice')
 import TrawlNet # pylint: disable=E0401,C0413
 
-DOWNLOADS_DIRECTORY = './'
+DOWNLOADS_DIRECTORY = './downloads/'
 
 def transfer_request(file_name, orchestrator):
     remote_EOF = False
@@ -40,41 +40,29 @@ def transfer_request(file_name, orchestrator):
 
 class Client(Ice.Application): # pylint: disable=R0903
     '''
-    Clase cliente
+    Client
     '''
-    def __init__(self):
-        print('Cliente iniciado\n\n')
 
     def run(self, argv):
         '''
-        Iniciar cliente
+        run
         '''
-        if(len(argv)==2):
-            proxy = self.communicator().stringToProxy(argv[1])
-        else:
-            print(len(argv))
-            proxy = self.communicator().stringToProxy(argv[3])
-
+        broker = self.communicator()
+        proxy = broker.stringToProxy(argv[1])
         orchestrator = TrawlNet.OrchestratorPrx.checkedCast(proxy)
 
-        if not orchestrator:
-            raise RuntimeError('Invalid orchestrator proxy')
+        if len(argv) == 4:
 
-        if(len(argv)==2):
-            print('Lista de canciones preparadas')
+            if argv[2] == '--transfer':
+                transfer_request(argv[3], orchestrator)
+
+            if argv[2] == '--download':
+                orchestrator.downloadTask(argv[3])
+
+        if len(argv) == 2:
+            
             print(orchestrator.getFileList())
-            sys.exit
-        elif(len(argv)==4):
-            '''
-            --download -> descargar
-            --transfer -> obtener
-            '''
-            if argv[1] == '--download':
-                orchestrator.downloadTask(argv[2])
-            elif argv[1] == '--transfer':
-                transfer_request(argv[2], orchestrator)
-        else:
-            ("Introduzca los argumentos correctamente")
+
 
         return 0
 

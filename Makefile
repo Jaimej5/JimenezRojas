@@ -7,7 +7,7 @@ all:
 clean:
 	$(RM) -r /tmp/db
 	$(RM) -r /tmp/YoutubeDownloaderApp
-
+	$(RM) -r ./downloads/
 run: clean
 	$(MAKE) app-workspace
 	$(MAKE) run-registry-node &
@@ -36,8 +36,9 @@ run-downloads-node: /tmp/db/downloads-node/servers
 
 app-workspace: /tmp/YoutubeDownloaderApp/
 	mkdir /tmp/YoutubeDownloaderApp/downloads/
+	mkdir ./downloads
 	cp trawlnet.ice orchestrator.py downloader_factory.py \
-	transfer_factory.py topic_icestorm.py download_mp3.py /tmp/YoutubeDownloaderApp
+	transfer_factory.py utils.py /tmp/YoutubeDownloaderApp
 	icepatch2calc /tmp/YoutubeDownloaderApp
 
 /tmp/%:
